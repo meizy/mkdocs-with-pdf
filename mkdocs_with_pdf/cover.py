@@ -24,9 +24,11 @@ def _make_cover(soup: PageElement, options: Options):
         template = options.template.select(['cover', 'default_cover'])
 
         options.logger.info(f'Generate a cover page with "{template.name}".')
-        soup_template = BeautifulSoup(template.render(keywords), 'html.parser')
+        cover_rendered = template.render(keywords)
+        cover_rendered = options.hook.pre_cover_insert(cover_rendered) # MM
+        cover_soup = BeautifulSoup(cover_rendered, 'html.parser')
 
-        soup.body.insert(0, soup_template)
+        soup.body.insert(0, cover_soup)    
     except Exception as e:
         options.logger.error('Failed to generate the cover page: %s', e)
 

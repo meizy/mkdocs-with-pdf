@@ -71,3 +71,9 @@ class EventHookHandler(object):
             soup = self._module.pre_pdf_render(soup, self._logger)
             return str(soup)
         return html_string
+
+    def pre_cover_insert(self, html_string: str) -> BeautifulSoup: # MM
+        if self._module and hasattr(self._module, 'pre_cover_insert'):
+            html_string = self._module.pre_cover_insert(html_string, self._logger)
+            return html_string
+        return html_string

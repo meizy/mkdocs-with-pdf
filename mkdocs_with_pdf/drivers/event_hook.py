@@ -64,3 +64,10 @@ class EventHookHandler(object):
             soup = self._module.pre_pdf_render(soup, self._logger)
             return str(soup)
         return html_string
+
+    def pre_pdf_render(self, html_string: str) -> BeautifulSoup:
+        if self._module and hasattr(self._module, 'pre_pdf_render'):
+            soup = BeautifulSoup(html_string, 'html.parser')
+            soup = self._module.pre_pdf_render(soup, self._logger)
+            return str(soup)
+        return html_string
